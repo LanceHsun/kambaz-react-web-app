@@ -5,13 +5,18 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table";
-import { FaAlignJustify, FaBars } from "react-icons/fa";
+import { FaAlignJustify, FaBars, FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
+import { IoCalendarOutline } from "react-icons/io5";
+import { LiaBookSolid } from "react-icons/lia";
+import { AiOutlineDashboard } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Courses() {
   const [showKambazNav, setShowKambazNav] = useState(false);
   const [showCourseNav, setShowCourseNav] = useState(false);
+  const [activeButton, setActiveButton] = useState("Courses");
   const location = useLocation();
   
   const getCurrentPageName = () => {
@@ -45,10 +50,10 @@ export default function Courses() {
       </div>
       
       <div className={`offcanvas offcanvas-start ${showKambazNav ? 'show' : ''}`} id="kambazNav">
-        <div className="offcanvas-header">
+        <div className="offcanvas-header border-bottom">
           <div className="d-flex align-items-center">
             <img src="/logo.png" alt="N Logo" className="me-2" width="40" height="40" />
-            <h5 className="offcanvas-title">N</h5>
+            <h5 className="offcanvas-title text-danger">CANVAS</h5>
           </div>
           <IoMdClose 
             className="btn-close cursor-pointer fs-4" 
@@ -57,42 +62,66 @@ export default function Courses() {
         </div>
         <div className="offcanvas-body p-0">
           <div className="list-group rounded-0">
-            <a href="#" className="list-group-item border-0 d-flex align-items-center py-3 ps-3">
-              <div className="d-flex flex-column align-items-center text-center">
-                <div className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', fontSize: '1.5rem' }}>👤</div>
-                <small>Account</small>
+            <Link to="/Kambaz/Dashboard" id="wd-dashboard-link"
+              className={`list-group-item border-0 d-flex align-items-center py-3 ps-3 ${activeButton === "Dashboard" ? "bg-light" : ""}`}
+              onClick={() => {
+                setActiveButton("Dashboard");
+                setShowKambazNav(false);
+              }}>
+              <div className="d-flex align-items-center">
+                <AiOutlineDashboard className={`me-3 fs-4 ${activeButton === "Dashboard" ? "text-danger" : "text-secondary"}`} />
+                <span className={activeButton === "Dashboard" ? "text-danger" : ""}>Dashboard</span>
               </div>
-            </a>
-            <a href="#" className="list-group-item border-0 d-flex align-items-center py-3 ps-3">
-              <div className="d-flex flex-column align-items-center text-center">
-                <div className="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', fontSize: '1.5rem' }}>📊</div>
-                <small>Dashboard</small>
+            </Link>
+            <Link to="/Kambaz/Account" id="wd-account-link"
+              className={`list-group-item border-0 d-flex align-items-center py-3 ps-3 ${activeButton === "Account" ? "bg-light" : ""}`}
+              onClick={() => {
+                setActiveButton("Account");
+                setShowKambazNav(false);
+              }}>
+              <div className="d-flex align-items-center">
+                <FaRegCircleUser className={`me-3 fs-4 ${activeButton === "Account" ? "text-danger" : "text-secondary"}`} />
+                <span className={activeButton === "Account" ? "text-danger" : ""}>Account</span>
               </div>
-            </a>
-            <a href="#" className="list-group-item border-0 d-flex align-items-center py-3 ps-3">
-              <div className="d-flex flex-column align-items-center text-center">
-                <div className="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', fontSize: '1.5rem' }}>📚</div>
-                <small>Courses</small>
+            </Link>
+            <Link to="/Kambaz/Courses" id="wd-courses-link"
+              className={`list-group-item border-0 d-flex align-items-center py-3 ps-3 ${activeButton === "Courses" ? "bg-light" : ""}`}
+              onClick={() => {
+                setActiveButton("Courses");
+                setShowKambazNav(false);
+              }}>
+              <div className="d-flex align-items-center">
+                <LiaBookSolid className="me-3 fs-4 text-danger" />
+                <span className="text-danger">Courses</span>
               </div>
-            </a>
-            <a href="#" className="list-group-item border-0 d-flex align-items-center py-3 ps-3">
-              <div className="d-flex flex-column align-items-center text-center">
-                <div className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', fontSize: '1.5rem' }}>📅</div>
-                <small>Calendar</small>
+            </Link>
+            <Link to="/Kambaz/Calendar" id="wd-calendar-link"
+              className={`list-group-item border-0 d-flex align-items-center py-3 ps-3 ${activeButton === "Calendar" ? "bg-light" : ""}`}
+              onClick={() => {
+                setActiveButton("Calendar");
+                setShowKambazNav(false);
+              }}>
+              <div className="d-flex align-items-center">
+                <IoCalendarOutline className="me-3 fs-4 text-danger" />
+                <span className="text-danger">Calendar</span>
               </div>
-            </a>
-            <a href="#" className="list-group-item border-0 d-flex align-items-center py-3 ps-3">
-              <div className="d-flex flex-column align-items-center text-center position-relative">
-                <div className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', fontSize: '1.5rem' }}>📩</div>
-                <span className="position-absolute bg-danger text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '20px', height: '20px', fontSize: '0.7rem', top: '0', right: '-5px' }}>22</span>
-                <small>Inbox</small>
+            </Link>
+            <Link to="/Kambaz/Inbox" id="wd-inbox-link"
+              className={`list-group-item border-0 d-flex align-items-center py-3 ps-3 ${activeButton === "Inbox" ? "bg-light" : ""}`}
+              onClick={() => {
+                setActiveButton("Inbox");
+                setShowKambazNav(false);
+              }}>
+              <div className="d-flex align-items-center">
+                <FaInbox className="me-3 fs-4 text-danger" />
+                <span className="text-danger">Inbox</span>
+                <span className="ms-2 bg-danger text-white rounded-circle d-flex align-items-center justify-content-center" style={{ width: '20px', height: '20px', fontSize: '0.7rem' }}>22</span>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>
       
-      {/* Course Navigation Offcanvas for mobile */}
       <div className={`offcanvas offcanvas-end ${showCourseNav ? 'show' : ''}`} id="courseNav">
         <div className="offcanvas-header border-bottom">
           <h5 className="offcanvas-title">CS5610 SU1 24 MON/FRI</h5>

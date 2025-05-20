@@ -50,7 +50,12 @@ export default function Profile() {
         <option value="FACULTY">Faculty</option>
         <option value="STUDENT">Student</option>
       </Form.Select><br />
-      <Link to="/Kambaz/Account/Signin" className="btn btn-primary">Sign out</Link>
+      <Link 
+        to="/Kambaz/Account/Signin" 
+        className="btn btn-danger w-100"
+      >
+        Sign out
+      </Link>
     </div>
   );
 }
