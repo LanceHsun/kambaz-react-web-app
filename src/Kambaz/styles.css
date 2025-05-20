@@ -37,3 +37,107 @@ body * {
   background-color: white;
   border-left: 3px solid black !important;
 }
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+.border-gray {
+  border-color: gray;
+}
+
+@media (min-width: 768px) {
+  #wd-kambaz .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+
+
+.dropdown-menu {
+  border-radius: 0;
+  margin-top: 0;
+  padding: 0;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+}
+
+#wd-modules-controls .btn {
+  border-radius: 4px;
+}
+
+hr {
+  width: 100%;
+  margin: 0.5rem 0 1rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+#wd-courses {
+  width: 100vw !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+}
+
+#wd-courses .container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 767.98px) {
+  .offcanvas {
+    width: 80%;
+    max-width: 300px;
+  }
+  
+  .offcanvas.show {
+    visibility: visible;
+    transform: none;
+  }
+  
+  .offcanvas-start {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  
+  .offcanvas-end {
+    right: 0;
+    transform: translateX(100%);
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+}
+
+.bg-dark {
+  background-color: #333 !important;
+}
+
+.wd-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
