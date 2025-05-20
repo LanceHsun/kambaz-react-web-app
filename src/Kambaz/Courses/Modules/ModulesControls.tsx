@@ -4,17 +4,17 @@ import { FaCheck } from "react-icons/fa";
 
 export default function ModulesControls() {
   return (
-    <div id="wd-modules-controls" className="d-flex flex-wrap mb-4 w-100">
-      <Button variant="light" id="wd-collapse-all" className="rounded-1 me-1 mb-1 text-center">
+    <div id="wd-modules-controls" className="d-flex justify-content-end mb-4 w-100">
+      <Button variant="light" id="wd-collapse-all" className="rounded-1 me-1 text-center">
         Collapse All
       </Button>
       
-      <Button variant="light" id="wd-view-progress" className="rounded-1 me-1 mb-1 text-center">
+      <Button variant="light" id="wd-view-progress" className="rounded-1 me-1 text-center">
         View Progress
       </Button>
       
-      <Dropdown className="mb-1 me-1">
-        <Dropdown.Toggle variant="secondary" id="wd-publish-all-btn" className="rounded-1 d-flex align-items-center">
+      <Dropdown className="me-1">
+        <Dropdown.Toggle variant="light" id="wd-publish-all-btn" className="rounded-1 d-flex align-items-center">
           <div className="d-flex align-items-center">
             <span className="position-relative d-flex align-items-center me-1">
               <span className="bg-success rounded-circle d-flex align-items-center justify-content-center" 
@@ -62,7 +62,7 @@ export default function ModulesControls() {
         </Dropdown.Menu>
       </Dropdown>
       
-      <Button variant="danger" id="wd-add-module-btn" className="rounded-1 ms-auto mb-1">
+      <Button variant="danger" id="wd-add-module-btn" className="rounded-1">
         <FaPlus className="me-1" /> Module
       </Button>
     </div>
