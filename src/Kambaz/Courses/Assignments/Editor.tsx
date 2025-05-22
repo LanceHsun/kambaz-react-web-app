@@ -1,21 +1,38 @@
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 import { HiOutlineX } from "react-icons/hi";
+import { useParams, Link } from "react-router-dom";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignments = db.assignments;
+  const assignment = assignments.find((a: any) => a._id === aid);
+
+  if (!assignment) {
+    return <div>Assignment not found</div>;
+  }
+
+  const formatDateForInput = (dateString: string) => {
+    const date = new Date(dateString);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T23:59`;
+  };
+
+  const dueDate = formatDateForInput(assignment.dueDate);
+  const availableFrom = formatDateForInput(assignment.availableDate);
+  
+  const availableUntil = (() => {
+    const date = new Date(assignment.dueDate);
+    date.setDate(date.getDate() + 7);
+    return formatDateForInput(date.toISOString());
+  })();
+
   return (
     <Form.Group id="wd-assignments-editor d-flex">
       <Form.Label htmlFor="wd-name" className="mb-2"><span className="wd-bold">Assignment Name</span></Form.Label>
 
       <div className="wd-textarea-container">
-        <Form.Control id="wd-name" defaultValue="A1 - ENV + HTML" className="mb-3" />
-        <Form.Control as="textarea" id="wd-description" className="mb-4 textarea">
-          The assignment is available online Submit a link to the landing page of your Web application running on Netlify.
-
-          The landing page should include the following: 1. Your full name and section Links to each of the lab assignments Link to the Kanbas application
-
-          2. Links to all relevant source code repositories
-          
-          3. The Kanbas application should include a link to navigate back to the landing page.
+        <Form.Control id="wd-name" defaultValue={assignment.title} className="mb-3" />
+        <Form.Control as="textarea" id="wd-description" className="mb-4 textarea" defaultValue={assignment.description}>
         </Form.Control>
       </div>
 
@@ -37,7 +54,7 @@ export default function AssignmentEditor() {
 
         <Col xs="7" className="text-start ms-3">
           <Row className="wd-row">
-            <Form.Control id="wd-points" className="wd-assignment-editor-dropdown" defaultValue={100} />
+            <Form.Control id="wd-points" className="wd-assignment-editor-dropdown" defaultValue={assignment.points} />
           </Row>
           <Row className="wd-row">
             <Form.Select id="wd-group" className="wd-assignment-editor-dropdown">
@@ -131,7 +148,7 @@ export default function AssignmentEditor() {
                 <Form.Label htmlFor="wd-due-date" className="wd-bold ms-2">Due</Form.Label>
               </Row>
               <Row className="wd-row-small ms-2 mb-3">
-                <Form.Control type="datetime-local" defaultValue="2024-05-13T23:59" id="wd-due-date" className="wd-date-time" />
+                <Form.Control type="datetime-local" defaultValue={dueDate} id="wd-due-date" className="wd-date-time" />
               </Row>
               <Row className="wd-row-small g-2">
                 <Col xs={12} md={6} className="d-flex flex-column ms-2">
@@ -140,7 +157,7 @@ export default function AssignmentEditor() {
                   </Form.Label>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue="2024-05-06T00:00"
+                    defaultValue={availableFrom}
                     id="wd-available-from"
                     className="wd-date-time"
                   />
@@ -151,7 +168,7 @@ export default function AssignmentEditor() {
                   </Form.Label>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue="2024-05-20T23:59"
+                    defaultValue={availableUntil}
                     id="wd-available-until"
                     className="wd-date-time"
                   />
@@ -164,8 +181,8 @@ export default function AssignmentEditor() {
 
       <hr />
       <div className="text-end">
-        <Button type="button" id="wd-editor-cancel" className="btn-secondary">Cancel</Button>
-        <Button type="button" id="wd-editor-save" className="btn-save">Save</Button>
+        <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-secondary me-2" id="wd-editor-cancel">Cancel</Link>
+        <Link to={`/Kambaz/Courses/${cid}/Assignments`} className="btn btn-danger" id="wd-editor-save">Save</Link>
       </div>
     </Form.Group>
   );
