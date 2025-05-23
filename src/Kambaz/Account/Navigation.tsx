@@ -1,33 +1,25 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 
 export default function AccountNavigation() {
-  const location = useLocation();
-  const currentPath = location.pathname.split('/').pop() || '';
-  
-  const isActive = (path: string) => currentPath === path;
-  
-  return (
-    <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
-      <Link 
-        to={`/Kambaz/Account/Signin`} 
-        className={`list-group-item border border-0 ${isActive('Signin') ? 'active' : 'text-danger'}`}
-      >
-        Signin
-      </Link><br />
-      
-      <Link 
-        to={`/Kambaz/Account/Signup`} 
-        className={`list-group-item border border-0 ${isActive('Signup') ? 'active' : 'text-danger'}`}
-      >
-        Signup
-      </Link><br />
-      
-      <Link 
-        to={`/Kambaz/Account/Profile`} 
-        className={`list-group-item border border-0 ${isActive('Profile') ? 'active' : 'text-danger'}`}
-      >
-        Profile
-      </Link><br />
-    </div>
-  );
+    const { pathname } = useLocation();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const links = currentUser
+        ? [{ label: "Profile", path: "/Kambaz/Account/Profile" }]
+        : [
+            { label: "Signin", path: "/Kambaz/Account/Signin" },
+            { label: "Signup", path: "/Kambaz/Account/Signup" },
+        ];
+    return (
+        <div id="wd-account-navigation">
+            {links.map((link) => (
+                <Link to={link.path}
+                key={link.label}
+                    id={`wd-account-${link.label}`}
+                    className={`fs-5 wd-account-nav-link d-block mb-2 ps-1 me-3 ${pathname.includes(link.label) ? "active wd-black-text" : "text-danger"}`}> {link.label} </Link>
+            ))}
+        </div>
+    );
 }

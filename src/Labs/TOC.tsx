@@ -30,6 +30,11 @@ export default function TOC() {
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
+          <Nav.Link as={Link} to="/Labs/Lab4" active={currentPath === "/Labs/Lab4"}>
+            Lab 4
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
           <Nav.Link as={Link} to="/Kambaz" active={currentPath.startsWith("/Kambaz")}>
             Kambaz
           </Nav.Link>

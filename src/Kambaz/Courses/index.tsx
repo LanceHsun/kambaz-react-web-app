@@ -1,43 +1,41 @@
 import CourseNavigation from "./Navigation";
-import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import Modules from "./Modules";
 import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
-import PeopleTable from "./People/Table";
+import { Navigate, Routes, Route, useParams, useLocation } from "react-router";
 import { FaAlignJustify } from "react-icons/fa6";
-import { courses } from "../Database";
+import PeopleTable from "./People/Table";
+import ProtectedCourseRoute from "./ProtectedCourseRoute";
+import { useSelector } from "react-redux";
 
 export default function Courses() {
   const { cid } = useParams();
-  const course = courses.find((course) => course._id === cid);
+  const { courses } = useSelector((state: any) => state.coursesReducer);
   const { pathname } = useLocation();
-  
-  const pathParts = pathname.split('/');
-  const currentSection = pathParts[pathParts.length - 1];
-  
+  const course = courses.find((c: any) => c._id === cid);
+
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {course && course.name} &gt; {currentSection}
-      </h2>
+        {course && course.name} &gt; {pathname.split("/").pop()}</h2> <hr />
       <div className="d-flex">
-        <div>
+        <div className="d-none d-md-block">
           <CourseNavigation />
         </div>
         <div className="flex-fill">
           <Routes>
-            <Route path="/" element={<Navigate to="Home" />} />
-            <Route path="Home" element={<Home />} />
-            <Route path="Modules" element={<Modules />} />
-            <Route path="Assignments" element={<Assignments />} />
-            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-            <Route path="People" element={<PeopleTable />} />
-            <Route path="Piazza" element={<h2>Piazza</h2>} />
-            <Route path="Zoom" element={<h2>Zoom</h2>} />
-            <Route path="Quizzes" element={<h2>Quizzes</h2>} />
-            <Route path="Grades" element={<h2>Grades</h2>} />
+            <Route path="/" element={<ProtectedCourseRoute><Navigate to="Home" /></ProtectedCourseRoute>} />
+            <Route path="Home" element={<ProtectedCourseRoute><Home /></ProtectedCourseRoute>} />
+            <Route path="Modules" element={<ProtectedCourseRoute><Modules /></ProtectedCourseRoute>} />
+            <Route path="Piazza" element={<ProtectedCourseRoute><h2>Piazza</h2></ProtectedCourseRoute>} />
+            <Route path="Zoom" element={<ProtectedCourseRoute><h2>Zoom</h2></ProtectedCourseRoute>} />
+            <Route path="Assignments" element={<ProtectedCourseRoute><Assignments /></ProtectedCourseRoute>} />
+            <Route path="Assignments/:aid" element={<ProtectedCourseRoute><AssignmentEditor /></ProtectedCourseRoute>} />
+            <Route path="Quizzes" element={<ProtectedCourseRoute><h2>Quizzes</h2></ProtectedCourseRoute>} />
+            <Route path="Grades" element={<ProtectedCourseRoute><h2>Grades</h2></ProtectedCourseRoute>} />
+            <Route path="People" element={<ProtectedCourseRoute><PeopleTable /></ProtectedCourseRoute>} />
           </Routes>
         </div>
       </div>
