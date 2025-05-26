@@ -32,14 +32,22 @@ export default function Modules() {
                 <BsGripVertical className="me-2 fs-3" />
                 {!module.editing && module.name}
                 {module.editing && (
-                  <FormControl className="w-50 d-inline-block"
-                    onChange={(e) => dispatch(updateModule({ ...module, name: e.target.value }))}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        dispatch(updateModule({ ...module, editing: false }));
-                      }
-                    }}
-                    defaultValue={module.name} />
+                    <FormControl 
+                        className="w-50 d-inline-block"
+                        onChange={(e) => dispatch(updateModule({ 
+                            ...module, 
+                            name: e.target.value 
+                        }))}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                dispatch(updateModule({ 
+                                    ...module, 
+                                    editing: false 
+                                }));
+                            }
+                        }}
+                        value={module.name}
+                    />
                 )}
                 { currentUser.role === "FACULTY" && <ModuleControlButtons moduleId={module._id}
                   deleteModule={(moduleId) => {

@@ -8,7 +8,9 @@ export default function StringStateVariables() {
       <p>{firstName}</p>
       <Form.Control
         value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}/>
+        onChange={(e) => setFirstName(e.target.value)}
+        className="form-control"
+      />
       <hr/>
     </div>
   );

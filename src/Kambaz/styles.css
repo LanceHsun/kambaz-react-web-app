@@ -1,154 +1,22 @@
 body {
-  margin: 0;
-  padding: 0;
-}
-
-body * {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@media (min-width: 768px) {
-  #wd-kambaz .wd-main-content-offset {
-    padding-left: 140px !important;
-  }
-}
-
-.btn-secondary {
-  --bs-btn-color: #000 !important;
-  --bs-btn-bg: #c7cdd1 !important;
-  --bs-btn-border-color: #c7cdd1 !important;
-  --bs-btn-hover-color: #fff !important;
-}
-
-.bg-secondary {
-  --bs-secondary-rgb: 199, 205, 209;
-}
-
-.list-group-item {
-  --bs-list-group-border-color: gray;
-}
-
-.wd-lesson {
-  border-left: 3px solid green !important;
-}
-
-.list-group.wd > .list-group-item.active {
-  color: black;
-  background-color: white;
-  border-left: 3px solid black !important;
-}
-.btn-secondary {
-  --bs-btn-color: #000 !important;
-  --bs-btn-bg: #c7cdd1 !important;
-  --bs-btn-border-color: #c7cdd1 !important;
-  --bs-btn-hover-color: #fff !important;
-}
-
-.bg-secondary {
-  --bs-secondary-rgb: 199, 205, 209;
-}
-
-.list-group-item {
-  --bs-list-group-border-color: gray;
-}
-
-.wd-lesson {
-  border-left: 3px solid green !important;
-}
-
-.list-group.wd > .list-group-item.active {
-  color: black;
-  background-color: white;
-  border-left: 3px solid black !important;
-}
-
-.border-gray {
-  border-color: gray;
-}
-
-@media (min-width: 768px) {
-  #wd-kambaz .wd-main-content-offset {
-    padding-left: 140px !important;
-  }
-}
-
-
-.dropdown-menu {
-  border-radius: 0;
-  margin-top: 0;
-  padding: 0;
-}
-
-.dropdown-item {
-  padding: 0.5rem 1rem;
-}
-
-#wd-modules-controls .btn {
-  border-radius: 4px;
-}
-
-hr {
-  width: 100%;
-  margin: 0.5rem 0 1rem 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
-}
-
-#wd-courses {
-  width: 100vw !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  overflow-x: hidden !important;
-}
-
-#wd-courses .container-fluid {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-@media (max-width: 767.98px) {
-  .offcanvas {
-    width: 80%;
-    max-width: 300px;
-  }
-  
-  .offcanvas.show {
-    visibility: visible;
-    transform: none;
-  }
-  
-  .offcanvas-start {
-    left: 0;
-    transform: translateX(-100%);
-  }
-  
-  .offcanvas-end {
-    right: 0;
-    transform: translateX(100%);
-  }
-  
-  .cursor-pointer {
-    cursor: pointer;
-  }
-}
-
-.bg-dark {
-  background-color: #333 !important;
-}
-
-.wd-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-body {
     margin: 0;
     padding: 0;
 }
 
 body * {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 768px) {
+    #wd-kambaz .wd-main-content-offset {
+        padding-left: 140px !important;
+    }
+}
+
+.list-group.wd>.list-group-item.active {
+    color: black;
+    background-color: white;
+    border-left: 3px solid black !important;
 }
 
 .btn-secondary {
@@ -166,8 +34,46 @@ body * {
     --bs-list-group-border-color: gray;
 }
 
+.wd-lesson,
 .wd-assignment {
     border-left: 3px solid green !important;
+}
+
+.card {
+    position: relative;
+    height: 320px !important;
+    width: 270px;
+}
+
+.card .wd-go-button {
+    position: absolute;
+    bottom: 10px;
+}
+
+.card .wd-card-edit-button {
+    position: absolute;
+    bottom: 10px;
+    right: 80px; /* 10px from the right */
+    margin-right: 2px;
+
+}
+
+.card .wd-card-delete-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px; /* 10px from the right */
+    margin-right: 2px;
+
+}
+
+.wd-assignment-percentage {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid gray;
+    ;
+    border-radius: 20px;
+    padding: 6px 12px;
+    display: inline-block;
 }
 
 .wd-assignment-name {
@@ -206,8 +112,23 @@ body * {
     align-items: center;
 }
 
+.wd-lesson-icon-container {
+    position: relative;
+    vertical-align: middle;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    align-self: right;
+    font-size: 1.2em;
+}
+
+
 .wd-bold {
     font-weight: bold;
+}
+
+.wd-right-align {
+    align-self: flex-end;
 }
 
 .wd-assignments-controls-container {
@@ -230,6 +151,19 @@ body * {
     pointer-events: none;
 }
 
+.wd-account-nav-link {
+    text-decoration: none;
+}
+
+.wd-account-nav-link.active {
+    border-left: 3px solid black !important;
+}
+
+.wd-black-text {
+    color: black;
+}
+
+.btn-sign-out,
 .btn-save {
     --bs-btn-color: white !important;
     --bs-btn-bg: red !important;
@@ -304,6 +238,8 @@ body * {
     background-color: lightgrey;
     border-radius: 2px;
     margin-left: 5px;
+    ;
+
 }
 
 .wd-everyone-tag {
@@ -312,12 +248,4 @@ body * {
 
 .wd-assignment-editor-dropdown {
     max-width: 360px !important;
-}
-
-.wd-assignment-percentage {
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 1px solid gray;
-    border-radius: 20px;
-    padding: 6px 12px;
 }

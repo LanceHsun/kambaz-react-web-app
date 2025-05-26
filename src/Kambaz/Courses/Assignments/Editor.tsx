@@ -19,6 +19,15 @@ export default function AssignmentEditor() {
     return <h2>Assignment not found</h2>;
   }
 
+  const safeDate = (dateValue: any) => {
+    if (!dateValue) return new Date().toISOString().slice(0, 16);
+    try {
+      return new Date(dateValue).toISOString().slice(0, 16);
+    } catch {
+      return new Date().toISOString().slice(0, 16);
+    }
+  };
+
   return (
 
     <Form.Group id="wd-assignments-editor d-flex">
@@ -31,7 +40,7 @@ export default function AssignmentEditor() {
         </Form.Control>
       </div>
 
-      <Col className="d-flex">
+      <Col className="d-flex mt-4">
         <Col xs="2" className="text-end">
           <Row className="wd-row">
             <Form.Label htmlFor="wd-points">Points</Form.Label>
@@ -70,7 +79,7 @@ export default function AssignmentEditor() {
               <option value="COMPLETE/INCOMPLETE">Complete/Incomplete</option>
             </Form.Select>
           </Row>
-          <div className="border wd-submission-type-container">
+          <div className="border wd-submission-type-container p-3">
             <Row className="wd-row">
               <Form.Select id="wd-submission-type" className="w-50 ms-2">
                 <option value="ONLINE">Online</option>
@@ -79,7 +88,7 @@ export default function AssignmentEditor() {
               </Form.Select>
 
             </Row>
-            <Row className="wd-row-small">
+            <Row className="wd-row-small mt-3">
               <Form.Label className="wd-bold">Online Entry Options</Form.Label>
             </Row>
             <Row className="wd-row-small flex-nowrap">
@@ -107,7 +116,7 @@ export default function AssignmentEditor() {
         </Col>
       </Col>
 
-      <div className="mt-3">
+      <div className="mt-5">
         <Col className="d-flex">
           <Col xs="2" className="text-end">
             <Row className="wd-row-small">
@@ -115,11 +124,11 @@ export default function AssignmentEditor() {
             </Row>
           </Col>
           <Col xs="7" className="text-start ms-3">
-            <div className="border wd-assignment-dates-container">
+            <div className="border wd-assignment-dates-container p-3">
               <Row className="wd-row-small wd-slight-right">
                 <Form.Label htmlFor="wd-assign-to" className="wd-bold">Assign to </Form.Label>
               </Row>
-              <Row className="wd-row ms-1">
+              <Row className="wd-row ms-1 mb-3">
                 <div className="border wd-everyone-container">
                   <div className="wd-everyone-tag-box border">
                     <span className="wd-everyone-tag ms-1">Everyone</span>
@@ -130,32 +139,32 @@ export default function AssignmentEditor() {
               <Row className="wd-row-small wd-slight-right">
                 <Form.Label htmlFor="wd-due-date" className="wd-bold">Due</Form.Label>
               </Row>
-              <Row className="wd-row-small ms-1">
+              <Row className="wd-row-small ms-1 mb-3">
                 <Form.Control type="datetime-local"
-                  defaultValue={new Date(assignmentData.due_dt).toISOString().slice(0, 16)}
+                  defaultValue={safeDate(assignmentData.due_dt)}
                   id="wd-due-date" className="wd-date-time"
                   onChange={(e) => setAssignmentData({ ...assignmentData, due_dt: e.target.value })} />
               </Row>
-              <Row className="wd-row-small mt-1 g-2">
+              <Row className="wd-row-small mt-3 g-2">
                 <Col xs={12} md={6} className="d-flex flex-column">
-                  <Form.Label htmlFor="wd-available-from" className="wd-bold">
+                  <Form.Label htmlFor="wd-available-from" className="wd-bold mb-2">
                     Available From
                   </Form.Label>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={new Date(assignmentData.available_dt).toISOString().slice(0, 16)}
+                    defaultValue={safeDate(assignmentData.available_dt)}
                     id="wd-available-from"
                     className="wd-date-time"
                     onChange={(e) => setAssignmentData({ ...assignmentData, available_dt: e.target.value })}
                   />
                 </Col>
                 <Col xs={12} md={6} className="d-flex flex-column">
-                  <Form.Label htmlFor="wd-available-until" className="wd-bold">
+                  <Form.Label htmlFor="wd-available-until" className="wd-bold mb-2">
                     Until
                   </Form.Label>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={new Date(assignmentData.until_dt).toISOString().slice(0, 16)}
+                    defaultValue={safeDate(assignmentData.until_dt)}
                     id="wd-available-until"
                     className="wd-date-time"
                     onChange={(e) => setAssignmentData({ ...assignmentData, until_dt: e.target.value })}
