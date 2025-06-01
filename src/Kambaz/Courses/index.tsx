@@ -19,7 +19,9 @@ export default function Courses() {
     <div id="wd-courses">
       <h2 className="text-danger">
         <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {course && course.name} &gt; {pathname.split("/").pop()}</h2> <hr />
+        {course && course.name} &gt; {pathname.split("/").pop()}
+      </h2> 
+      <hr />
       <div className="d-flex">
         <div className="d-none d-md-block">
           <CourseNavigation />
@@ -36,6 +38,7 @@ export default function Courses() {
             <Route path="Quizzes" element={<ProtectedCourseRoute><h2>Quizzes</h2></ProtectedCourseRoute>} />
             <Route path="Grades" element={<ProtectedCourseRoute><h2>Grades</h2></ProtectedCourseRoute>} />
             <Route path="People" element={<ProtectedCourseRoute><PeopleTable /></ProtectedCourseRoute>} />
+
           </Routes>
         </div>
       </div>

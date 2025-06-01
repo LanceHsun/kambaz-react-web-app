@@ -2,18 +2,46 @@ import { ListGroup } from "react-bootstrap";
 import AssignmentsControls from "./AssignmentsControls";
 import LessonControlButtons from "../Modules/LessonControlButtons";
 import { BsGripVertical } from "react-icons/bs";
-import AssignmentsControlButtons from "./AssignmentsControlButtons"
+import AssignmentsControlButtons from "./AssignmentsControlButtons";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { LuNotebookPen } from "react-icons/lu";
 import { useParams } from "react-router";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FaTrash } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AssignmentDelete from "./AssignmentDelete";
+import { setAssignments, deleteAssignment } from "./reducer";
+import * as client from "./client";
 
 export default function Assignments() {
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const dispatch = useDispatch();
   const { cid } = useParams();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const [show, setShow] = useState(false);
+  const [assignmentToDelete, setAssignmentToDelete] = useState<any>(null);
+
+  const fetchAssignments = async () => {
+    if (!cid) return;
+    const assignments = await client.findAssignmentsForCourse(cid);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
+
+  const removeAssignment = async (assignment: any) => {
+    await client.deleteAssignment(assignment._id);
+    dispatch(deleteAssignment({ assignment }));
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = (assignment: any) => {
+    setAssignmentToDelete(assignment);
+    setShow(true);
+  };
+
   const formatDate = (dateString: any) => {
     return new Date(dateString)
       .toLocaleString('en-US', { 
@@ -23,17 +51,7 @@ export default function Assignments() {
         minute: '2-digit', 
         hour12: true 
       })
-      .replace(',', '')
-  };
-  
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const [show, setShow] = useState(false);
-  const [assignmentToDelete, setAssignmentToDelete] = useState<any>(null);
-
-  const handleClose = () => setShow(false);
-  const handleShow = (assignment: any) => {
-    setAssignmentToDelete(assignment);
-    setShow(true);
+      .replace(',', '');
   };
 
   return (
@@ -102,22 +120,23 @@ export default function Assignments() {
                         onClick={() => handleShow(assignment)}
                       />
                     )}
-                    {currentUser.role === "FACULTY" && assignmentToDelete && (
-                      <AssignmentDelete 
-                        show={show} 
-                        handleClose={handleClose} 
-                        dialogTitle={`Delete \"${assignmentToDelete.title}\" Assignment?`} 
-                        assignment={assignmentToDelete}
-                      />
-                    )}
                     <LessonControlButtons />
                   </ListGroup.Item>
-                ))
-              }
+                ))}
             </ListGroup>
           </ListGroup.Item>
         </ListGroup>
       </div>
+
+      {currentUser.role === "FACULTY" && assignmentToDelete && (
+        <AssignmentDelete 
+          show={show} 
+          handleClose={handleClose} 
+          dialogTitle={`Delete "${assignmentToDelete.title}" Assignment?`} 
+          assignment={assignmentToDelete}
+          deleteAssignment={removeAssignment}
+        />
+      )}
     </div>
   );
 }

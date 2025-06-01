@@ -3,19 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { FormControl, Button } from "react-bootstrap";
 import { setCurrentUser } from "./reducer";
-
-interface UserProfile {
-  username?: string;
-  password?: string;
-  firstName?: string;
-  lastName?: string;
-  dob?: string;
-  email?: string;
-  role?: string;
-}
+import * as client from "./client";
 
 export default function Profile() {
-  const [profile, setProfile] = useState<UserProfile>({});
+  const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -28,7 +19,19 @@ export default function Profile() {
     setProfile(currentUser);
   };
   
-  const signout = () => {
+  const updateProfile = async () => {
+    try {
+      const updatedProfile = await client.updateUser(profile);
+      dispatch(setCurrentUser(updatedProfile));
+      alert("Profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Failed to update profile");
+    }
+  };
+  
+  const signout = async () => {
+    await client.signout();
     dispatch(setCurrentUser(null));
     navigate("/Kambaz/Account/Signin");
   };
@@ -124,6 +127,14 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
+          
+          <Button 
+            onClick={updateProfile} 
+            className="w-100 mb-2" 
+            variant="primary"
+          >
+            Update
+          </Button>
           
           <Button 
             onClick={signout} 
