@@ -22,8 +22,6 @@ export default function Signin() {
       navigate("/Kambaz/Account/Profile");
     } catch (error) {
       console.error("Sign in failed:", error);
-      // Optionally, you can add error handling here
-      // For example, show an error message to the user
     }
   };
 
