@@ -7,16 +7,26 @@ import * as client from "./client";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   
-  const fetchProfile = () => {
-    if (!currentUser) {
+  const fetchProfile = async () => {
+    try {
+      if (!currentUser) {
+        const serverProfile = await client.profile();
+        dispatch(setCurrentUser(serverProfile));
+        setProfile(serverProfile);
+      } else {
+        setProfile(currentUser);
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
       navigate("/Kambaz/Account/Signin");
-      return;
+    } finally {
+      setLoading(false);
     }
-    setProfile(currentUser);
   };
   
   const updateProfile = async () => {
@@ -31,14 +41,28 @@ export default function Profile() {
   };
   
   const signout = async () => {
-    await client.signout();
-    dispatch(setCurrentUser(null));
-    navigate("/Kambaz/Account/Signin");
+    try {
+      await client.signout();
+      dispatch(setCurrentUser(null));
+      navigate("/Kambaz/Account/Signin");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
   
   useEffect(() => { 
     fetchProfile(); 
   }, []);
+  
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <div className="wd-profile-screen">

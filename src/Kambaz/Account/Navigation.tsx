@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 
 export default function AccountNavigation() {
     const { pathname } = useLocation();
@@ -20,6 +18,12 @@ export default function AccountNavigation() {
                     id={`wd-account-${link.label}`}
                     className={`fs-5 wd-account-nav-link d-block mb-2 ps-1 me-3 ${pathname.includes(link.label) ? "active wd-black-text" : "text-danger"}`}> {link.label} </Link>
             ))}
+            {currentUser && currentUser.role === "ADMIN" && (
+                <Link to="/Kambaz/Account/Users" 
+                    className={`fs-5 wd-account-nav-link d-block mb-2 ps-1 me-3 ${pathname.includes("Users") ? "active wd-black-text" : "text-danger"}`}>
+                    Users
+                </Link>
+            )}
         </div>
     );
 }
