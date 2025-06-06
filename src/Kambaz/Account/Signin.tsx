@@ -22,6 +22,9 @@ export default function Signin() {
       console.log("Sign in successful:", user);
       
       dispatch(setCurrentUser(user));
+      
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      
       navigate("/Kambaz/Account/Profile");  
     } catch (error: any) {
       console.error("Sign in failed:", error);
