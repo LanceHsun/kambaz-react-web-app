@@ -22,6 +22,8 @@ axiosWithCredentials.interceptors.response.use(
 );
 
 export const signin = async (credentials: any) => {
+  console.log('signin url:', `${USERS_API}/signin`);
+  console.log('signin credentials:', credentials);
   const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
   return response.data;
 };
