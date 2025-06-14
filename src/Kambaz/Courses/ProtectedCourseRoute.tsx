@@ -8,6 +8,10 @@ export default function ProtectedCourseRoute({ children }: { children: ReactNode
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { cid } = useParams();
 
+    if (currentUser.role === "FACULTY") {
+        return <>{children}</>;
+    }
+
     const isEnrolled = enrollments.some(
         (enrollment: any) => enrollment.user === currentUser._id && enrollment.course === cid
     );

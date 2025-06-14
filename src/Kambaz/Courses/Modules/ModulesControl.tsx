@@ -8,12 +8,16 @@ import GreenCheckmark from "./GreenCheckmark";
 interface ModulesControlsProps {
   moduleName: string;
   setModuleName: (title: string) => void;
+  moduleDescription: string;
+  setModuleDescription: (description: string) => void;
   addModule: () => void;
 }
 
 export default function ModulesControls({
   moduleName,
   setModuleName,
+  moduleDescription,
+  setModuleDescription,
   addModule
 }: ModulesControlsProps) {
   const [show, setShow] = useState<boolean>(false);
@@ -86,7 +90,9 @@ export default function ModulesControls({
         handleClose={handleClose} 
         dialogTitle="Add Module"
         moduleName={moduleName} 
-        setModuleName={setModuleName} 
+        setModuleName={setModuleName}
+        moduleDescription={moduleDescription}
+        setModuleDescription={setModuleDescription}
         addModule={addModule} 
       />
     </div>

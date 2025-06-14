@@ -1,6 +1,8 @@
 import { Modal, FormControl, Button } from "react-bootstrap";
-export default function ModuleEditor({ show, handleClose, dialogTitle, moduleName, setModuleName, addModule, }: {
+export default function ModuleEditor({ show, handleClose, dialogTitle, moduleName, setModuleName, moduleDescription, setModuleDescription, addModule, }: {
     show: boolean; handleClose: () => void; dialogTitle: string; moduleName: string; setModuleName: (name: string) => void;
+    moduleDescription: string;
+    setModuleDescription: (description: string) => void;
     addModule: () => void;
 }) {
     return (
@@ -9,8 +11,24 @@ export default function ModuleEditor({ show, handleClose, dialogTitle, moduleNam
                 <Modal.Title>{dialogTitle}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormControl value={moduleName}
-                    onChange={(e) => { setModuleName(e.target.value); }} />
+                <div className="mb-3">
+                    <label className="form-label">Module Name</label>
+                    <FormControl 
+                        value={moduleName}
+                        onChange={(e) => { setModuleName(e.target.value); }}
+                        placeholder="Enter module name"
+                    />
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Module Description</label>
+                    <FormControl 
+                        as="textarea"
+                        rows={3}
+                        value={moduleDescription}
+                        onChange={(e) => { setModuleDescription(e.target.value); }}
+                        placeholder="Enter module description"
+                    />
+                </div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}> Cancel </Button>

@@ -2,13 +2,12 @@ import axios from "axios";
 
 const axiosWithCredentials = axios.create({ 
   withCredentials: true,
-  baseURL: import.meta.env.VITE_REMOTE_SERVER,
   headers: {
     'Content-Type': 'application/json',
   }
 });
 
-export const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
+export const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER || 'http://localhost:4000';
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 
 axiosWithCredentials.interceptors.response.use(
@@ -53,7 +52,7 @@ export const findMyCourses = async () => {
 };
 
 export const createCourse = async (course: any) => {
-  const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses`, course);
+  const { data } = await axiosWithCredentials.post(`${REMOTE_SERVER}/api/courses`, course);
   return data;
 };
 
@@ -105,4 +104,18 @@ export const enrollIntoCourse = async (userId: string, courseId: string) => {
 export const unenrollFromCourse = async (userId: string, courseId: string) => {
   const response = await axiosWithCredentials.delete(`${USERS_API}/${userId}/courses/${courseId}`);
   return response.data;
+};
+
+export const findMyEnrollments = async () => {
+  const { data } = await axiosWithCredentials.get(`${REMOTE_SERVER}/api/users/current/courses`);
+  let userId = null;
+  try {
+    userId = JSON.parse(localStorage.getItem('currentUser') || '{}')._id;
+  } catch {
+    userId = null;
+  }
+  return data.filter((course: any) => course && course._id).map((course: any) => ({
+    user: userId,
+    course: course._id
+  }));
 };

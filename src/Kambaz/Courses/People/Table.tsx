@@ -4,10 +4,12 @@ import { FaUserCircle } from "react-icons/fa";
 import { Link, useParams } from "react-router-dom";
 import PeopleDetails from "./Details";
 import * as courseClient from "../client";
+import { useSelector } from "react-redux";
 
 export default function PeopleTable({ users = [], fetchUsers }: { users?: any[], fetchUsers?: () => void }) {
   const { cid } = useParams();
   const [courseUsers, setCourseUsers] = useState<any[]>([]);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchUsersForCourse = async () => {
     if (cid) {
@@ -42,11 +44,19 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[],
           {displayUsers.map((user: any) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
-                <Link to={`/Kambaz/Account/Users/${user._id}`} className="text-decoration-none">
-                  <FaUserCircle className="me-2 fs-1 text-secondary" />
-                  <span className="wd-first-name">{user.firstName}</span>{" "}
-                  <span className="wd-last-name">{user.lastName}</span>
-                </Link>
+                {currentUser?.role === "ADMIN" ? (
+                  <Link to={`/Kambaz/Account/Users/${user._id}`} className="text-decoration-none">
+                    <FaUserCircle className="me-2 fs-1 text-secondary" />
+                    <span className="wd-first-name">{user.firstName}</span>{" "}
+                    <span className="wd-last-name">{user.lastName}</span>
+                  </Link>
+                ) : (
+                  <>
+                    <FaUserCircle className="me-2 fs-1 text-secondary" />
+                    <span className="wd-first-name">{user.firstName}</span>{" "}
+                    <span className="wd-last-name">{user.lastName}</span>
+                  </>
+                )}
               </td>
               <td className="wd-login-id">{user.loginId}</td>
               <td className="wd-section">{user.section}</td>

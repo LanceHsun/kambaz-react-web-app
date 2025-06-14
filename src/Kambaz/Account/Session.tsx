@@ -12,13 +12,33 @@ export default function Session({ children }: { children: any }) {
       console.log("Fetching user profile...");
       const currentUser = await client.profile();
       console.log("Profile fetched:", currentUser);
-      dispatch(setCurrentUser(currentUser));
+      
+      if (currentUser) {
+        dispatch(setCurrentUser(currentUser));
+      } else {
+
+        const savedUser = localStorage.getItem('currentUser');
+        if (savedUser) {
+          console.log("Restoring user from localStorage");
+          dispatch(setCurrentUser(JSON.parse(savedUser)));
+        } else {
+          dispatch(setCurrentUser(null));
+        }
+      }
     } catch (err: any) {
       console.log("Profile fetch error:", err.response?.status);
+      
+      const savedUser = localStorage.getItem('currentUser');
+      if (savedUser) {
+        console.log("Restoring user from localStorage after fetch error");
+        dispatch(setCurrentUser(JSON.parse(savedUser)));
+      } else {
+        dispatch(setCurrentUser(null));
+      }
+      
       if (err.response?.status !== 401) {
         console.error("Session error:", err);
       }
-      dispatch(setCurrentUser(null));
     } finally {
       setPending(false);
     }
