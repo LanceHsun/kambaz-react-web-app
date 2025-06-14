@@ -1,0 +1,5 @@
+[context.a6.environment]
+  VITE_REMOTE_SERVER = "https://kambaz-node-server-a6.onrender.com"
+
+[context.a5.environment]
+  VITE_REMOTE_SERVER = "https://kambaz-node-server-app-2ptb.onrender.com"
